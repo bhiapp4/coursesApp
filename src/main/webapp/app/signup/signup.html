@@ -1,0 +1,68 @@
+<h2>Signup</h2><br/>	
+<div class="row">
+	<div class="col-md-6 col-lg-6 well">
+		<form [formGroup]="signupForm" (ngSubmit)="signup()">
+			<div class="form-group">
+			 	<label for="username">Username</label>
+				<input type="text" 
+					class="form-control" 
+					id="username" 
+					[formControl]="signupForm.controls['user_name']"
+					#uname="ngForm"
+					placeholder="Email">
+				<div *ngIf="checking">
+					Checking...
+				</div>				   		
+				<control-messages [control]="uname"></control-messages>			        
+			</div>
+		    <div class="form-group">
+		        <label for="password">Password</label>
+		        <input type="text" 
+		        	class="form-control" 
+		        	id="password" 
+		        	[formControl]="signupForm.controls['password']"
+		        	#pword="ngForm"
+		        	placeholder="Password">
+		        <control-messages [control]="pword"></control-messages>
+		    </div>
+				<div class="form-group">
+					<label for="first_name">First Name</label>
+					<input 
+						type="text" 
+						class="form-control" 
+						[formControl]="signupForm.controls['first_name']"
+						#fName="ngForm"
+						id="first_name">
+					<control-messages [control]="fName"></control-messages>
+				</div>
+				<div class="form-group">
+					<label for="middle_name">Middle Name</label>
+					<input 
+						type="text" 
+						class="form-control" 
+						[formControl]="signupForm.controls['middle_name']"
+						id="middle_name">
+				</div>
+				<div class="form-group">
+					<label for="last_name">Last Name</label>
+					<input 
+						type="text" 
+						class="form-control" 
+						[formControl]="signupForm.controls['last_name']"
+						#lName="ngForm"
+						id="last_name">
+						<control-messages [control]="lName"></control-messages>
+				</div>
+				<div class="form-group">
+					<label for="company">Company</label>
+					<input 
+						type="text" 
+						class="form-control" 
+						[formControl]="signupForm.controls['company']"
+						id="company">
+				</div>
+		    <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">Signup</button>
+		</form>
+	</div>
+</div>	  
+  

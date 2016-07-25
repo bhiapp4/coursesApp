@@ -1,0 +1,170 @@
+<h1>Add Course</h1>
+<div class="row">
+    <div class="col-md-6 col-lg-6 well">
+        <form [formGroup]="courseForm" (ngSubmit)="saveCourse()">
+            <fieldset>
+                <legend>Course Info</legend>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input 
+                    	type="text" 
+                    	class="form-control" 
+                    	[formControl]="courseForm.controls['title']"
+                    	#ctitle="ngForm"
+                    	placeholder="Course Name"
+                    	[(ngModel)]="course.title"
+                    	id="ctitle">
+                    <control-messages [control]="ctitle"></control-messages>
+                </div>
+                <div class="form-group">
+                    <label for="fee">Fee</label>
+                    <input 
+                    	type="text" 
+                    	class="form-control" 
+                    	[formControl]="courseForm.controls['fee']"
+                    	placeholder="Course Fee"
+                    	[(ngModel)]="course.fee"
+                    	id="fee">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select 
+                    	id="category" 
+                    	[formControl]="courseForm.controls['category']"
+                    	#category="ngForm"
+                    	[(ngModel)]="course.category"
+                    	class="form-control">
+                        <option value="">Select one</option>
+                        <option value="IT-Programming">IT-Programming</option>
+                        <option value="IT-Administration">IT-Administration</option>
+                        <option value="Businsess">Businsess</option>
+                        <option value="Misc">Misc</option>
+                    </select>
+                    <control-messages [control]="category"></control-messages>
+                </div>
+                <div class="form-group">
+                    <label for="level">Level</label>
+                    <select 
+                    	id="level" 
+                    	[formControl]="courseForm.controls['level']"
+                    	#level="ngForm"
+                    	[(ngModel)]="course.level"
+                    	class="form-control">
+                    	<option value="">Select One</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                    <control-messages [control]="level"></control-messages>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration</label>
+                    <input 
+                    	type="text" 
+                    	class="form-control" 
+                    	placeholder="Course Duration"
+                    	[formControl]="courseForm.controls['duration']"
+                    	#duration="ngForm"
+                    	[(ngModel)]="course.duration"
+                    	id="duration">
+                    <control-messages [control]="duration"></control-messages>
+                </div>
+                <div class="form-group">
+                    <label for="requirements">Requirements</label>
+                    <input 
+                    	type="text" 
+                    	class="form-control" 
+                    	placeholder="Comma Separated Reqs"
+                    	[formControl]="courseForm.controls['requirements']"
+                    	[(ngModel)]="course.requirements"
+                    	id="requirements">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea 
+                    	id="description" 
+                    	cols="30" 
+                    	rows="5" 
+                    	placeholder="Course Description"
+                    	[formControl]="courseForm.controls['description']"
+                    	[(ngModel)]="course.description"
+                    	class="form-control">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="endGoal">End Goal</label>
+                    <textarea 
+                    	id="endGoal" 
+                    	cols="30" 
+                    	rows="5" 
+                    	placeholder="End Goal"
+                    	[formControl]="courseForm.controls['end_goal']"
+                    	[(ngModel)]="course.end_goal"
+                    	class="form-control">
+                    </textarea>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                	Module Info
+                	<i class="glyphicon glyphicon-plus-sign" (click)="addModule()"></i>
+                </legend>
+
+	            <div class="panel panel-default" *ngFor=" let module of courseForm.find('modules').controls; let i=index">
+	  				<div class="panel-heading">
+	    				Module {{i+1}}
+	    				<i class="glyphicon glyphicon-minus-sign" (click)="removeModule(i)"></i>
+	  				</div>
+	  				<div class="panel-body">
+			             <input 
+			             	type="text" 
+			                class="form-control" 
+			                placeholder="Module Name"
+			                [formControl]="module.controls['module_name']"
+			                [(ngModel)]="course.modules[i].module_name"
+			                #mName="ngForm">
+			             <control-messages [control]="mName"></control-messages>
+				         <fieldset>
+		        		 	<legend>
+		                		Clip Info
+                				<i class="glyphicon glyphicon-plus-sign" (click)="addClip(module.find('clips').controls)"></i>
+		                	</legend>
+					        
+							<div class="panel panel-default" *ngFor="let clip of module.find('clips').controls; let j=index">
+				  				<div class="panel-heading">
+				    				Clip {{j+1}}
+	    							<i class="glyphicon glyphicon-minus-sign" (click)="removeClip(module.find('clips'), j)"></i>
+				  				</div>
+				  				<div class="panel-body">
+								    <div class="form-group">
+										<label for="clipName">Clip Name</label>
+									    <input type="text" 
+									        class="form-control"
+									        placeholder="Name of the Clip" 
+									        [formControl]="clip.controls['name']"
+									        #cName="ngForm"
+									        [(ngModel)]="course.modules[i].clips[j].name">
+									    <control-messages [control]="cName"></control-messages>
+									</div>
+									<div class="form-group">
+										<label for="clipDuration">Clip Duration</label>
+									    <input 
+									    	type="text" 
+									        class="form-control" 
+									        placeholder="Duration of the Clip"
+									       	[formControl]="clip.controls['duration']"
+									       	#cDuration="ngForm"
+									       	[(ngModel)]="course.modules[i].clips[j].duration">
+									    <control-messages [control]="cDuration"></control-messages>
+									</div>
+				  				</div>
+							</div>
+						</fieldset>	
+	  				</div>
+				</div>
+            </fieldset>
+            <button class="btn btn-primary" [disabled]="!courseForm.valid">Save Course</button>
+        </form>
+    </div>
+</div>

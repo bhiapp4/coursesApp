@@ -1,0 +1,145 @@
+
+cqlsh>create keyspace jnit with replication={'class':'SimpleStrategy','replication_factor':3}and durable_writes=true;
+cqlsh>use jnit;
+cqlsh:jnit>create table users(username varchar primary key, password varchar, first_name varchar, last_name varchar, middle_name varchar, company varchar, courses List<varchar>, createdTime timestamp, updatedTime timestamp);
+cqlsh:jnit>create type clip(name varchar,duration int);      
+cqlsh:jnit>create type module(module_id int,module_name varchar,clips set<frozen<clip>>);                                                
+cqlsh:jnit>create table courses(title varchar, author varchar, modules Set<frozen<module>>, created_date timestamp, updated_date timestamp, primary key(title));
+cqlsh:jnit>insert into courses(title,author,modules)values('Java Programing','Mike',{{module_id:1,module_name:'Datatypes',clips:{{name:'Primtives',duration:240},{name:'Reference',duration:360}}},{module_id:2,module_name:'Collections',clips:{{name:'Set',duration:360},{name:'List',duration:360}}}});
+cqlsh:jnit>create index on courses(modules);
+
+CREATE KEYSPACE jnit WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
+
+CREATE TYPE jnit.clip (
+    name text,
+    duration int
+);
+
+CREATE TYPE jnit.module (
+    module_id int,
+    module_name text,
+    clips frozen<list<frozen<clip>>>
+);
+
+CREATE TYPE jnit.reviewDetail(
+	no_of_stars int,
+	review_date timestamp,
+	full_name text,
+	review_comment text
+);
+
+
+CREATE TABLE jnit.courses (
+    title text PRIMARY KEY,
+    author text,
+    description text,
+    level text,
+    duration text,
+    category text,
+    end_goal text,
+    fee decimal,
+    modules list<frozen<module>>,
+    requirements text,
+    created_date timestamp,
+    updated_date timestamp
+) WITH comment='A table of courses';
+
+CREATE TABLE jnit.users (
+    user_name text PRIMARY KEY,
+    password text,
+    secretkey text,
+    company text,
+    registered_courses list<text>,
+    instructing_courses list<text>,
+    first_name text,
+    last_name text,
+    middle_name text,
+    created_date timestamp,
+    updated_date timestamp
+) WITH comment='A table of users';
+
+
+CREATE TABLE jnit.reviews (
+	course_name text primary key,
+	reviews list<frozen<reviewDetail>>
+)WITH comment='A table of review comments';
+
+CREATE INDEX ON jnit.courses(modules);
+
+--
+insert into jnit.users (
+    user_name,
+    password,
+    company,
+    instructing_courses,
+    first_name,
+    last_name,
+    created_date,
+    updated_date
+) values(
+	'Appi',
+	'appi1234',
+	'Jnit',
+	['Java Programming'],
+	'Appi',
+	'Bhimavarapu',
+	dateof(now()),
+	dateof(now())
+);
+
+insert into jnit.users ( user_name, password, company, instructing_courses, first_name, last_name, created_date, updated_date ) values( 'Appi', 'appi1234', 'Jnit', ['Java Programming'], 'Appi', 'Bhimavarapu', dateof(now()), dateof(now()) ); 
+insert into jnit.courses ( title, author, description, level,category, end_goal, fee, modules, created_date, updated_date )values( 'Java Programming', 'Appi', 'Java programming tutorial covering Java 8 features as well','BEGINNER','IT', 'Ability to program using Java', 10.25, [ { module_id:1, module_name:'Datatypes', clips:[ { name:'Primitives', duration:240 }, { name:'Reference', duration:360 } ] }, { module_id:2, module_name:'Collections', clips:[ { name:'Set', duration:360 }, { name:'List', duration:360 } ] } ], dateof(now()), dateof(now()) ); 
+insert into jnit.courses ( title, author, duration, description, level,category, end_goal, fee, modules, created_date, updated_date )values( 'JEE Programming', 'Appi', '4h 20m','Java Enteprise programming','BEGINNER','IT', 'java enteprise programming', 15.25, [ { module_id:1, module_name:'Servlets', clips:[ { name:'Lifecycle', duration:240 }, { name:'Container', duration:360 } ] }, { module_id:2, module_name:'JSPS', clips:[ { name:'JSP Lifecycle', duration:480 }, { name:'JSP Container', duration:360 } ] } ], dateof(now()), dateof(now()) ); 
+
+insert into jnit.courses (
+    title,
+    author,
+    description,
+    level,
+    category,
+    end_goal,
+    fee,
+    modules,
+    created_date,
+    updated_date
+)values(
+	'Java Programming',
+	'Appi',
+	'Java programming tutorial covering Java 8 features as well',
+	'BEGINNER',
+	'IT',
+	'Ability to program using Java',
+	10.25,
+	[
+		{
+			module_id:1,
+			module_name:'Datatypes',
+			clips:[
+				{
+					name:'Primitives',
+					duration:240
+				},
+				{	name:'Reference',
+					duration:360
+				}
+			]
+		},
+		{
+			module_id:2,
+			module_name:'Collections',
+			clips:[
+				{
+					name:'Set',
+					duration:360
+				},
+				{
+					name:'List',
+					duration:360
+				}
+			]
+		}
+	],
+	dateof(now()),
+	dateof(now())
+); 
+

@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-3 col-lg-3"></div>	
+  <div class="col-md-6 col-lg-6 well" style="margin-top:100px;">
+	<h2>Login</h2>
+	<form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+		<div class="form-group">
+	        <label for="username">Username</label>
+	        <input 
+	        	type="text" 
+	        	class="form-control" 
+	        	id="username" 
+	        	[formControl]="loginForm.controls['user_name']"
+	        	#uname="ngForm"
+	        	placeholder="Email">
+	        <control-messages [control]="uname"></control-messages>
+	        
+	    </div>
+	    <div class="form-group">
+	        <label for="password">Password</label>
+	        <input 
+	        	type="password" 
+	        	class="form-control"
+	        	id="password" 
+	        	[formControl]="loginForm.controls['password']"
+	        	#pword="ngForm"
+	        	placehodler="Password">
+	        <control-messages [control]="pword"></control-messages>
+	
+	    </div>
+	
+	    <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+		<a style="float:right;" [routerLink]="['/signup']">Create Account</a>
+	</form>  
+ </div>
+ <div class="col-md-3 col-lg-3"></div>	
+ 
+</div>

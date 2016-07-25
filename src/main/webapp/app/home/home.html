@@ -1,0 +1,28 @@
+<div style="margin-bottom:10px;">
+	<a [routerLink]="['/addCourse']" class="btn btn-primary" role="button">Add New Course</a>
+</div>
+<ul class="nav nav-pills">
+  <li role="presentation" [class.active]="currentActiveTab == 'Newest'">
+  	<a [routerLink]="['/home','Newest']">Newest</a>
+  </li>
+  <li role="presentation" [class.active]="currentActiveTab == 'Popular'">
+  	<a [routerLink]="['/home','Popular']">Popular</a>
+  </li>
+  <li role="presentation" [class.active]="currentActiveTab == 'Recommended'">
+  	<a [routerLink]="['/home','Recommended']">Recommended</a>
+  </li>  
+</ul>
+<div *ngIf="currentActiveTab == 'Newest'">
+	<h3>Newest Courses</h3>
+	<course-list [courses]="newestCourses"></course-list>
+</div>
+
+<div *ngIf="currentActiveTab == 'Popular'">
+	<h3>Popular Courses</h3>
+  	<course-list [courses]="popularCourses"></course-list>
+</div>
+
+<div *ngIf="currentActiveTab == 'Recommended'">
+	<h3>Recommended Courses</h3>
+  	<course-list [courses]="recommendedCourses"></course-list>
+</div>
